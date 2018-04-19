@@ -1,0 +1,49 @@
+header{
+	background-color:#d8ebff;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+ }
+ .top1 a{text-decoration:none;
+ 	color:black !important;}
+#about{text-align:center;}
+.kat {border:2px solid #84b3ff;
+height:230px;
+margin:130px;
+margin-bottom:-50px;
+margin-top:-50px;
+;
+    box-shadow: 0 0 20px #84b3ff
+;
+background-color:rgba(0,0,0,0.3);}
+.kat {color:#fff;}
+
+.kat:hover{box-shadow: 0 0 40px #84b3ff;
+}
+ a{text-decoration:none !important;
+ 	color:black !important;}
+#news{background-color:#ddeaff;
+ box-shadow: 0 0 30px rgba(0,0,0,0.5);}
+ .podkat{
+   box-shadow: 0px -10px 14px -10px #000000 inset,
+    0px 10px 14px -10px #000000 inset;
+    background-color:#fff;
+}
+.noviekategorii li{list-style-type:none;}
+footer{background-image: url(img/footer.png);
+color:white;}
+footer a{color:white !important;}
+
+i {
+font-family: fontawesome !important;
+}
+footer{
+	margin-top: -1.5rem!important;
+}
+
+
+
+
+
+/* eskeeeetit */
+nav {color:#fff !important;}

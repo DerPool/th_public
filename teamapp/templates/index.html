@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href='{% static "css/mainh.css" %}'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/css/swiper.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/css/swiper.min.css">
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.esm.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.2.2/js/swiper.esm.bundle.js"></script>
+    <title>TeamHunter</title>
+
+  </head>
+  <body>
+<div class="container-fluid top1">
+  <ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link tp" href="#" style="">Вакансии</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link tp" href="#" style="">Обучение</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link tp" href="#" style="">Профориентация</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link tp " href="#" style="">Команды</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link tp " href="#" style="">Администрирование</a>
+  </li>
+</ul>
+</div>
+
+
+<a href="" data-toggle="modal" data-target="#exampleModal"><span class="plus"><i class="fas fa-plus"></i></span></a>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Создать</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form action="vacancy/create/" method="post">
+        {% csrf_token %}
+        <p>Название</p>
+        <input type="text" name="short_desc" placeholder="Название" style="padding-left: 5px">
+        <br>
+        <p>Описание</p>
+        <textarea name="desc" id="" cols="50" rows="5"></textarea>
+        <br>
+        <p>Необходимые навыки</p>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+       <input type="submit" class="btn btn-primary" value="Отправить">
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+<script>  
+
+
+
+function search_onClick(){
+  $("#sbtn").attr("href", "search/" + document.getElementById("si").value);
+
+}
+</script>
+
+
+
+<section id="about" style="background-image:url({% static 'img/footerbg.png' %});">
+<div style="background-color:rgba(0,0,0,0.7)">
+  
+<div class="container-fluid head">
+<div class="container menu" ><nav class="navbar navbar-expand-lg  ">
+  
+{% if user.is_authenticated and profile %}
+<a class="navbar-brand" href="/profile/{{ user.id }}"><i class="fas fa-user-circle ava"></i></a>
+  <a class="navbar-brand" href="/profile/{{ user.id }}" style="margin-top:-3px">
+  {{ profile.name }} {{ profile.surname }}<br><span class='proft'>Профиль</span>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse profnb" id="navbarNavDropdown">
+    <ul class="navbar-nav" style="color:#fff !important">
+      <li class="nav-item dropdown" >
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding-right: 1.1rem;">
+         
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
+          <a class="dropdown-item" href="account/logout">Выйти</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" style="margin-right: 20px" >
+        <a class="nav-link " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Заявки 
+      {% if otkls %}
+      <span class='otkls'>{{otkls.count}}</span>
+      {% endif %}
+       </a>       
+        </a>
+        {% if otkls %}
+        <div class="dropdown-menu otklsmenu" aria-labelledby="okls" style="">
+          {% for o in otkls %}
+            <a href="#" class='otklelem'>
+              {{o.user.name}} {{o.user.surname}} оставил отклик на вакансию:
+              {{o.target.short_desc}}. {{o.date}}
+            </a>
+  
+          {% endfor %}
+        </div>
+      
+      </li>
+       {% endif %}
+      <li class="nav-item">
+        <a class="nav-link" href="#">Участие</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Рейтинг</a>
+      </li>
+{% else %}
+      <a href="{% url 'login'%}">Войти</a>
+      <a href="#" class="reg" data-toggle="modal" data-target="#registerModal">Регистрация</a>
+
+      <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Регистрация</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <a href="/account/signup/customer" class='btn btn-primary'>Я - частное лицо</a>
+        <a href="#" class='btn btn-primary'>Я - компания</a>
+        </p>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endif %}
+
+  
+      
+    </ul>
+      <form class="form-inline">
+    <input class="form-control mr-sm-2 srch" id="si" type="search" placeholder="Поиск" aria-label="Search" style="width:300px">
+    <a href="" onClick="search_onClick()" id = "sbtn"><i class="fas fa-search"></i></a>
+  </form>
+  </div>
+</nav></div>
+
+
+</div>
+
+  
+  <br><div class="container " >
+   <!-- Swiper -->
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">Slide 1</div>
+      <div class="swiper-slide">Slide 2</div>
+      <div class="swiper-slide">Slide 3</div>
+      <div class="swiper-slide">Slide 4</div>
+      <div class="swiper-slide">Slide 5</div>
+      <div class="swiper-slide">Slide 6</div>
+      <div class="swiper-slide">Slide 7</div>
+      <div class="swiper-slide">Slide 8</div>
+      <div class="swiper-slide">Slide 9</div>
+      <div class="swiper-slide">Slide 10</div>
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+
+
+  </div>
+<br>
+</div>
+
+</section>
+
+  </div>
+</section>
+<section id="filters"><div class="container">
+
+  <br><div class="row filtr">
+    <div class="col col-lg-1"><h5>Фильтр</h5></div>
+    <div class="col col-lg-2"><select name="" id=""><option value="БАЛАЛАЙКА">Категория</option></select></div>
+    <div class="col col-lg-2"><select name="" id=""><option value="БАЛАЛАЙКА">Оплата</option></select></div>
+    <div class="col col-lg-2"><select name="" id=""><option value="БАЛАЛАЙКА">Дата создания</option></select></div>
+    <div class="col col-lg-2"><button>Применить</button></div>
+  </div>
+  <div class=" flex">
+    {% if vacancies %}
+        {% for v in vacancies|dictsortreversed:"dateofcreation" %}
+            <a href="vacancy/{{v.pk}}/"><div class="col col-5 bloc">
+
+                  <p class="shortd">{{ v.short_desc }}</p>
+
+                  <div class="row">
+                          <div class=" col-11 info"><a href="" style="display: block"><i class="fas fa-user-circle infoava"></i><span class="infospan">
+                            {%if v.creator.is_company%}
+                            {{profile.name}}
+
+                            {%else%}
+                            {{ profile.surname }} {{profile.name}}
+
+                            {%endif%}
+                          </span></a></div>
+                  </div>
+
+                  <div class="infodesc"> {{v.desc}}</div>
+                 <br>  <br>
+                  <p class='skills'>Требуемые наывки:
+                  
+                  {% for t in tags|dictsortreversed:"value"  %}
+                      {%  if t.vacancy == v  %}
+                      <span 
+                          {% if t.value == '3' %}
+                              style="border-radius: 7px;background: red;padding:5px; margin-right: 5px;"
+                          {% endif %}
+                          {% if t.value == '2' %}
+                              style="border-radius: 7px;background: green;padding:5px; margin-right: 5px;"
+                          {% endif %}
+                          {% if t.value == '1' %}
+                              style="border-radius: 7px;background: gray;padding:5px; margin-right: 5px;"
+                          {% endif %}
+                          >{{t.tag.tag}}
+                      </span>
+                      {% endif %}
+                  {% endfor %}
+                  
+                  </p>
+
+                  <a href="vacancy/{{v.pk}}/" style="display:block;">Подобнее...</a>
+                  <a href="otkl/{{ v.pk }}/">Откликнуться</a>
+            </div></a>
+        {% endfor %}
+    {% else %}
+        <h1>Нет заявок!</h1>
+    {% endif %}
+  <br>
+</div>
+</section>
+<footer style="background-image:url({% static 'img/footer.jpg' %})"><div style="background-color:rgba(0,0,0,0.65);" class="page-footer font-small stylish-color-dark pt-4 mt-4">
+
+    <!--Footer Links-->
+    <div class="container text-center text-md-left">
+        <div class="row">
+
+            <!--First column-->
+            <div class="col-md-4">
+                <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">Информация</h5>
+                <p>TeamHunter - платформа для поиска и подбора команды.</p>
+            </div>
+            <!--/.First column-->
+
+            <hr class="clearfix w-100 d-md-none">
+
+            <!--Second column-->
+            <div class="col-md-2 mx-auto">
+                <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">Links</h5>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="#!">Вакансии</a>
+                    </li>
+                    <li>
+                        <a href="#!">Обучение</a>
+                    </li>
+                    <li>
+                        <a href="#!">Профориентация</a>
+                    </li>
+                    <li>
+                        <a href="#!">Команды</a>
+                    </li>
+                    <li>
+                        <a href="#!">Администрирование</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.Second column-->
+
+            <hr class="clearfix w-100 d-md-none">
+
+            <!--Third column-->
+            <div class="col-md-2 mx-auto">
+                <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">Links</h5>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="#!">Проекты</a>
+                    </li>
+                    <li>
+                        <a href="#!">Ищу работу</a>
+                    </li>
+                    <li>
+                        <a href="#!">Ищу сотрудников</a>
+                    </li>
+                    <li>
+                        <a href="#!">Помощь</a>
+                    </li>
+                    <li>
+                        <a href="#!">Компании</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.Third column-->
+
+            <hr class="clearfix w-100 d-md-none">
+
+            <!--Fourth column-->
+           
+        </div>
+    </div>
+    <!--/.Footer Links-->
+
+
+
+
+    <hr>
+
+    <!--Social buttons-->
+    <div class="text-center">
+        <ul class="list-unstyled list-inline">
+            <li class="list-inline-item">
+                <a class="btn-floating btn-sm btn-fb mx-1">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </li>
+            <li class="list-inline-item">
+                <a class="btn-floating btn-sm btn-tw mx-1">
+                   <i class="fab fa-twitter"></i>
+                </a>
+            </li>
+            <li class="list-inline-item">
+                <a class="btn-floating btn-sm btn-gplus mx-1">
+                    <i class="fab fa-google-plus-g"></i>
+                </a>
+            </li>
+            <li class="list-inline-item">
+                <a class="btn-floating btn-sm btn-li mx-1">
+                   <i class="fab fa-linkedin-in"></i>
+                </a>
+            </li>
+            <li class="list-inline-item">
+                <a class="btn-floating btn-sm btn-dribbble mx-1">
+                 <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+        </ul>
+    
+    <!--/.Social buttons-->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3 text-center">
+        © 2018 Copyright:
+        <a href="https://mdbootstrap.com/material-design-for-bootstrap/"> TeamHunter.pro </a>
+    </div></div></div>
+    <!--/.Copyright-->
+</footer>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+      direction: 'vertical',
+      autoplay:true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+  </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/brands.js" integrity="sha384-sCI3dTBIJuqT6AwL++zH7qL8ZdKaHpxU43dDt9SyOzimtQ9eyRhkG3B7KMl6AO19" crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  </body>
+</html>
